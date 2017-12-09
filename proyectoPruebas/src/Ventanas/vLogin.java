@@ -16,9 +16,6 @@ import javax.swing.border.EmptyBorder;
 public class vLogin extends JFrame {
 
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel lblUsuario;
 	private JLabel lblContrasea;
