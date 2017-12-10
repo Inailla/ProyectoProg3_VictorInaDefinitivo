@@ -3,7 +3,6 @@ package Ventanas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,17 +12,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class vLogin extends JFrame {
+import BaseDatos.Db;
+import datos.Usuario;
 
-	
-	private static final long serialVersionUID = 1L;
+public class vLoginn extends JFrame{
+
 	private JLabel lblUsuario;
 	private JLabel lblContrasea;
 	private JTextField textField_usu;
 	private JPasswordField passwordField;
+	Db database = new Db(); 
+	ventaaaaa pri = new ventaaaaa();
 	
 	
-	public vLogin(){
+	public vLoginn(){
 		
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,6 +55,9 @@ public class vLogin extends JFrame {
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Usuario u = new Usuario(textField_usu.getText(), passwordField.getText());
+				Db.comprobarUsuario(u);
+				pri.setVisible(true);
 				
 			}
 		});
@@ -73,7 +78,7 @@ public class vLogin extends JFrame {
 		contentPane.add(panel_usu);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(vLogin.class.getResource("/proyectoPruebas/Places-user-identity-icon.png")));
+		label.setIcon(new ImageIcon(vLoginn.class.getResource("/Ventanas/Places-user-identity-icon.png")));
 		panel_usu.add(label);
 		
 		
@@ -84,10 +89,9 @@ public class vLogin extends JFrame {
 		contentPane.add(panel);
 		
 		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(vLogin.class.getResource("/proyectoPruebas/lock-icon.png")));
+		label_1.setIcon(new ImageIcon(vLoginn.class.getResource("/Ventanas/lock-icon.png")));
 		panel.add(label_1);
 		
 		}
-	
 	
 }

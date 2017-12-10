@@ -78,7 +78,7 @@ public class ventaaaaa extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				vLogin log = new vLogin();
+				vLoginn log = new vLoginn();
 				log.setVisible(true);
 			}
 		});
