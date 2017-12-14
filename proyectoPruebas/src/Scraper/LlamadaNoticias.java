@@ -43,6 +43,21 @@ public class LlamadaNoticias {
 			}
              return link;
 	}
+    public ArrayList<Noticia> noticasUlt() throws IOException{
+		
+		ArrayList<Noticia> Eco = new ArrayList<>();
+		String urlEco = "http://ep00.epimg.net/rss/tags/ultimas_noticias.xml";
+		Document d2 = Jsoup.connect(urlEco).get();
+		Elements el2 = d2.select("title");
+		Elements el3 = d2.select("link");
+		
+		for(int i = 0; i < el2.size(); i++) {
+			Eco.add(new Noticia(el2.get(i).text(), el3.get(i).text()));
+		}
+		
+		return Eco;
+			
+	}
 	
 		
 	

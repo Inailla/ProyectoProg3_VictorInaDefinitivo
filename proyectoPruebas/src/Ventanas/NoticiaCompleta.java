@@ -11,6 +11,8 @@ import Scraper.LlamadaNoticias;
 import Scraper.TestURLImage;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.ScrollPane;
 import java.io.IOException;
@@ -34,7 +36,7 @@ public class NoticiaCompleta extends JFrame {
 	TestURLImage test;
 	JLabel lblimagen;
 	JPanel panel_imagen;
-	public NoticiaCompleta(String[] strings) {
+	public NoticiaCompleta(String[] strings,int i) {
 		
 		setTitle("DeustoNews");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +70,7 @@ public class NoticiaCompleta extends JFrame {
 		
 		lblimagen = new JLabel("");
 		try {
-			insertarImagen(strings[8]);
+			insertarImagen(strings[8],i);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -76,50 +78,62 @@ public class NoticiaCompleta extends JFrame {
 		
 		
 		try {
-			insertarTexto(strings[8]);
+			insertarTexto(strings[8],i);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		insertarTitulo(strings[9]);
+		tituloTamaño(strings[9]);
 		
 		
 		
 	}
-	public void insertarImagen(String ima) throws IOException{
+	public void insertarImagen(String ima,int o) throws IOException{
+		if(o==1){
 		String urlDeportes = ima;
 		Document d = Jsoup.connect(urlDeportes).get();
 		Elements el = d.select("div#wrapper");
 		for (org.jsoup.nodes.Element element : el.select("div.post-thumbnail")) {
 			String imagen = element.select("div.post-thumbnail img").attr("src");
 			imagenFrame(imagen);
-			}
-//		String urlDeportes = ima;
-//		Document d = Jsoup.connect(urlDeportes).get();
-//		Elements el = d.select("div#cuerpo_noticia");
-//		for (org.jsoup.nodes.Element element : el.select("div.foto-ancho")) {
-//			String imagen = element.select("div.foto-ancho img").attr("src");
-//			imagenFrame(imagen);
-//			}
-//		
+			}}
+		else{
+		String urlDeportes = ima;
+		Document d = Jsoup.connect(urlDeportes).get();
+		Elements el = d.select("div#cuerpo_noticia");
+		for (org.jsoup.nodes.Element element : el.select("div.foto-ancho")) {
+			String imagen = element.select("div.foto-ancho img").attr("src");
+			imagenFrame(imagen);
+			}}
+		
 		
 	}
 	public void insertarTitulo(String tit){
 		label_tit.setText(tit);
 	}
-	public void insertarTexto(String url) throws IOException{
+	public void tituloTamaño(String p){
+		if(p.length()>60){
+			p="<html>"+p.substring(0, 60)+"<br>"+p.substring(60, p.length())+"</html>";
+			insertarTitulo(p);
+		}else{
+			insertarTitulo(p);
+		}
+	}
+	public void insertarTexto(String url,int o) throws IOException{
+		if(o==1){
 		Document d1 = Jsoup.connect(url).get();
 		Elements el1 = d1.select("div#wrapper");
 		for (org.jsoup.nodes.Element element : el1.select("div.entry-inner")) {
 			String full= element.select("div.entry-inner").text();
 			textPane.setText(full);
-		}
-//		Document d1 = Jsoup.connect(url).get();
-//		Elements el1 = d1.select("div#cuerpo_noticia");
-//		for (org.jsoup.nodes.Element element : el1.select("div.cuerpo_noticia")) {
-//			
-//			textPane.setText(element.text());
-//		}
+		}}else{
+		Document d1 = Jsoup.connect(url).get();
+		Elements el1 = d1.select("div#cuerpo_noticia");
+		for (org.jsoup.nodes.Element element : el1.select("div.cuerpo_noticia")) {
+			System.out.println(element.text());
+			textPane.setText(element.text());
+			System.exit(0);
+		}}
 		
 	}
 	public void imagenFrame(String g){

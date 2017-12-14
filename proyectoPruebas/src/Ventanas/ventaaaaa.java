@@ -51,6 +51,11 @@ public class ventaaaaa extends JFrame {
 		pnlIndicaciones.setLayout(new GridLayout(0, 5, 0, 0));
 		
 		JButton btnUltimasNoticias = new JButton("Ult. Noticias");
+		btnUltimasNoticias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				insertarNoticiasUlt();
+			}
+		});
 		pnlIndicaciones.add(btnUltimasNoticias);
 		
 		JButton btnEconomia = new JButton("Economia");
@@ -105,7 +110,7 @@ public class ventaaaaa extends JFrame {
 		JButton btnVerNoticia = new JButton("Noticia Depor");
 		btnVerNoticia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				NoticiaCompleta com = new NoticiaCompleta(abrirNoticiaDepor());
+				NoticiaCompleta com = new NoticiaCompleta(abrirNoticiaDepor(), 1);
 				com.setVisible(true);
 				
 			}
@@ -118,7 +123,7 @@ public class ventaaaaa extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				NoticiaCompleta com = new NoticiaCompleta(abrirNoticiasEco());
+				NoticiaCompleta com = new NoticiaCompleta(abrirNoticiasEco(), 2);
 				com.setVisible(true);
 			}
 		});
@@ -166,6 +171,24 @@ public class ventaaaaa extends JFrame {
 		}
 	
 	}
+	public void insertarNoticiasUlt() {
+		
+		 DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
+		 model.removeAllElements();
+		
+		 try {
+			for (Noticia piloto :na.noticasUlt()) {
+				String tit = piloto.getTitulo();
+				if(tit.length() > 63) {
+					tit = tit.substring(0, 63) + "...";
+				}
+				model.addElement(tit);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 }
 	public String[] abrirNoticiaDepor(){
 		String[] url = new String[10];
 		
