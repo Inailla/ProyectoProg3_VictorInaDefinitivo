@@ -130,6 +130,16 @@ public class ventaaaaa extends JFrame {
 		btnNoticiaEco.setBounds(415, 216, 145, 29);
 		pnlContenido.add(btnNoticiaEco);
 		
+		JButton btnUltNoticias = new JButton("Ult. Noticias");
+		btnUltNoticias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				NoticiaCompleta com = new NoticiaCompleta(abrirNoticiasUlt(), 3);
+				com.setVisible(true);
+			}
+		});
+		btnUltNoticias.setBounds(415, 131, 145, 29);
+		pnlContenido.add(btnUltNoticias);
+		
 		
 		
 		
@@ -218,11 +228,20 @@ public class ventaaaaa extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return url;
 		
+	}
+	public String[] abrirNoticiasUlt(){
+		String[] url = new String[10];
 		
-		
-		
-		
+		try {
+			url[9]= na.noticasUlt().get(lstPosiblesPilotos.getSelectedIndex()).getTitulo();
+			url[8]= na.noticasUlt().get(lstPosiblesPilotos.getSelectedIndex()).getLink();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return url;
 		
 	}

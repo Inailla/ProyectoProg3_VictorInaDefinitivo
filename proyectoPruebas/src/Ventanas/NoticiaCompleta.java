@@ -88,7 +88,7 @@ public class NoticiaCompleta extends JFrame {
 		
 		
 	}
-	public void insertarImagen(String ima,int o) throws IOException{
+	public void insertarImagen(String ima,int o) throws IOException{//añadir imagen ult noticias
 		if(o==1){
 		String urlDeportes = ima;
 		Document d = Jsoup.connect(urlDeportes).get();
@@ -97,14 +97,17 @@ public class NoticiaCompleta extends JFrame {
 			String imagen = element.select("div.post-thumbnail img").attr("src");
 			imagenFrame(imagen);
 			}}
-		else{
+		else if(o==2){
 		String urlDeportes = ima;
 		Document d = Jsoup.connect(urlDeportes).get();
 		Elements el = d.select("div#cuerpo_noticia");
 		for (org.jsoup.nodes.Element element : el.select("div.foto-ancho")) {
 			String imagen = element.select("div.foto-ancho img").attr("src");
 			imagenFrame(imagen);
-			}}
+			}
+		}else{
+			
+		}
 		
 		
 	}
@@ -126,13 +129,19 @@ public class NoticiaCompleta extends JFrame {
 		for (org.jsoup.nodes.Element element : el1.select("div.entry-inner")) {
 			String full= element.select("div.entry-inner").text();
 			textPane.setText(full);
-		}}else{//NO LEE
+		}}else if(o==2){//NO LEE
 		Document d1 = Jsoup.connect(url).get();
 		Elements el1 = d1.select("div#cuerpo_noticia");
 		for (org.jsoup.nodes.Element element : el1.select("div.cuerpo_noticia")) {
 			System.out.println(element.text());
 			textPane.setText(element.text());
 			
+		}}else{
+			Document d1 = Jsoup.connect(url).get();
+			Elements el1 = d1.select("div.articulo__contenedor");
+			for (org.jsoup.nodes.Element element : el1) {
+				
+				textPane.setText(element.text());
 		}}
 		
 	}

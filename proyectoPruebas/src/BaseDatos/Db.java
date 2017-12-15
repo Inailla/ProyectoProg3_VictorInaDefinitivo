@@ -42,12 +42,9 @@ public class Db {
 		
 		try {
 			statement = con.createStatement();
-			//statement.execute("");
-			 
-		      
-              statement.executeUpdate("create table if not exists noticias (titulo text UNIQUE, link text,categoria text,fecha date)");
-		    
-		      statement.executeUpdate("create table if not exists usuario (usario text UNIQUE, pass text)");
+			
+			 statement.executeUpdate("create table if not exists noticias (titulo text UNIQUE, link text,categoria text,fecha date)");
+		     statement.executeUpdate("create table if not exists usuario (usario text UNIQUE, pass text)");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
