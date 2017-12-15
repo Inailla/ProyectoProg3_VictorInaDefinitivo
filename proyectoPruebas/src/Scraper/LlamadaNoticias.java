@@ -7,11 +7,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import BaseDatos.Db;
 import datos.Noticia;
 
 public class LlamadaNoticias {
+	private String dir = System.getProperty("user.dir");
+	private String url;
 
-	
+	public LlamadaNoticias() {
+		url = dir + "/" + "sample1.db";
+		Db.CrearTablas(url);
+	}
 	
 	public ArrayList<Noticia> noticasEco() throws IOException{
 		
@@ -24,7 +30,7 @@ public class LlamadaNoticias {
 		for(int i = 0; i < el2.size(); i++) {
 			Eco.add(new Noticia(el2.get(i).text(), el3.get(i).text()));
 		}
-		
+		Db.insertNews(url, Eco, "Economia");
 		return Eco;
 			
 	}

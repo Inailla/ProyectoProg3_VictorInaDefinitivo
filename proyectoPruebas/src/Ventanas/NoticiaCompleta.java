@@ -119,20 +119,20 @@ public class NoticiaCompleta extends JFrame {
 			insertarTitulo(p);
 		}
 	}
-	public void insertarTexto(String url,int o) throws IOException{
+	public void insertarTexto(String url,int o) throws IOException{//problema aqui
 		if(o==1){
 		Document d1 = Jsoup.connect(url).get();
 		Elements el1 = d1.select("div#wrapper");
 		for (org.jsoup.nodes.Element element : el1.select("div.entry-inner")) {
 			String full= element.select("div.entry-inner").text();
 			textPane.setText(full);
-		}}else{
+		}}else{//NO LEE
 		Document d1 = Jsoup.connect(url).get();
 		Elements el1 = d1.select("div#cuerpo_noticia");
 		for (org.jsoup.nodes.Element element : el1.select("div.cuerpo_noticia")) {
 			System.out.println(element.text());
 			textPane.setText(element.text());
-			System.exit(0);
+			
 		}}
 		
 	}

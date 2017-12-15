@@ -1,13 +1,17 @@
 package BaseDatos;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import Scraper.LlamadaNoticias;
+import datos.Noticia;
 import datos.Usuario;
 
 
@@ -19,54 +23,110 @@ public class Db {
 	static String noticia,link;
 	static String nombre,pass;
 	
-    public static String insertarNoticiasDeporBd() throws IOException{
+	public static Connection iniDB(String url){
 		
-		for (int i = 1; i < oli.noticiasDepor().size(); i++) {
-			noticia=oli.noticiasDepor().get(i).titulo;
-			link=oli.noticiasDepor().get(i).link;
-			try {
-				statement.executeQuery("insert into noticiaDEP values('"+noticia+"','"+link+"')");
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 try {
-				ResultSet rp = statement.executeQuery("select * from noticiaECO");
-				while(rp.next()){
-					return rp.getString("titulo");
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		   try {
+			Class.forName("org.sqlite.JDBC"); 
+			Connection connection =  DriverManager.getConnection("jdbc:sqlite:"+url);
+			return connection;
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
-		return null;
+		    
+          
+}
+	public static void CrearTablas(String url){
+		Connection con = iniDB(url);
 		
-		
-	}
-    public static String insertarNoticiasEcoBd() throws IOException{
-    	for (int ij = 1; ij < oli.noticasEco().size(); ij++) {
-			noticia=oli.noticasEco().get(ij).titulo;
-			link=oli.noticasEco().get(ij).link;
-			try {
-				statement.executeQuery("insert into noticiaECO values('"+noticia+"','"+link+"')");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-    	  try {
-			ResultSet rs = statement.executeQuery("select * from noticiaDEP");
-			while(rs.next()){
-				return rs.getString("titulo");
-			}
+		try {
+			statement = con.createStatement();
+			//statement.execute("");
+			 
+		      
+              statement.executeUpdate("create table if not exists noticias (titulo text UNIQUE, link text,categoria text,fecha date)");
+		    
+		      statement.executeUpdate("create table if not exists usuario (usario text UNIQUE, pass text)");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return null;
-    }
+		}finally {
+
+		      try
+
+		      {
+
+		        if(con != null)
+
+		          con.close();
+
+		      }
+
+		      catch(SQLException e)
+
+		      {
+
+		        // Cierre de conexión fallido
+
+		        System.err.println(e);
+
+		      }
+
+		    }
+	}
+	public static void insertNews(String url,ArrayList<Noticia> arr,String cat){
+		String date= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		Connection con= iniDB(url);
+		String sql = "insert into noticias values (?,?,?,?);";
+		PreparedStatement sta = null;
+		try {
+			sta = con.prepareStatement(sql);
+			con.setAutoCommit(false);
+			for(Noticia not : arr) {
+				sta.setString(1, not.getTitulo());
+				sta.setString(2, not.getLink());
+				sta.setString(3, cat);
+				sta.setDate(4, java.sql.Date.valueOf(date));
+				sta.addBatch();
+			}
+			sta.executeBatch();
+			con.commit();
+			
+		} catch (SQLException e) {
+			try{
+				con.rollback();
+			}catch (Exception e1) {
+				// TODO: handle exception
+				e1.printStackTrace();
+			}
+		
+			}finally {
+
+			      try
+
+			      {
+
+			        if(con != null)
+
+			          con.close();
+
+			      }
+
+			      catch(SQLException e)
+
+			      {
+
+			        // Cierre de conexión fallido
+
+			        System.err.println(e);
+
+			      }
+			      }
+
+	}
+	
+    
     public static void comprobarUsuario(Usuario us){
     	nombre=us.getUser();
     	pass=us.getPass();
@@ -84,92 +144,6 @@ public class Db {
 		}
     }
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException
-
-	  {
-
-	    // Carga el sqlite-JDBC driver usando el cargador de clases
-
-	    Class.forName("org.sqlite.JDBC");
-	    
-
-
-
-	    Connection connection = null;
-
-	    try
-
-	    {
-
-	      // Crear una conexión de BD
-
-	      connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
-
-	      statement = connection.createStatement();
-
-	      statement.setQueryTimeout(30);  // poner timeout 30 msg
-
-
-
-	    
-	      statement.executeUpdate("drop table if exists noticiaECO");
-	      statement.executeUpdate("drop table if exists noticiaDEP");
-	      statement.executeUpdate("drop table if exists usuario");
-
-	      statement.executeUpdate("create table noticiaECO (titulo string, link string)");
-	      statement.executeUpdate("create table noticiaDEP (titulo string, link string)");
-	      statement.executeUpdate("create table usuario (usario string, pass string)");
-	      
-	      statement.executeQuery("insert into noticiaECO values('ignacio','1234por')");
-	      statement.executeQuery("insert into noticiaECO values('pablo','telepizza')");
-	      
-	      insertarNoticiasEcoBd();
-          insertarNoticiasDeporBd();
-	     
-
-	      
-	      ResultSet rp = statement.executeQuery("select * from noticiaECO");
-	      
-
-	      while(rp.next())
-
-	      {
-
-	        // Leer el resultset
-
-	       
-	        
-	        System.out.println(rp.getString("link"));
-
-	      }
-
-	    } catch(SQLException e) {
-
-	      System.err.println(e.getMessage());
-
-	    } finally {
-
-	      try
-
-	      {
-
-	        if(connection != null)
-
-	          connection.close();
-
-	      }
-
-	      catch(SQLException e)
-
-	      {
-
-	        // Cierre de conexión fallido
-
-	        System.err.println(e);
-
-	      }
-
-	    }
-
-	  }
+	
+	  
 }
