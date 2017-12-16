@@ -129,7 +129,7 @@ public class NoticiaCompleta extends JFrame {
 		for (org.jsoup.nodes.Element element : el1.select("div.entry-inner")) {
 			String full= element.select("div.entry-inner").text();
 			textPane.setText(full);
-		}}else if(o==2){//NO LEE
+		}}else if(o==2){//NO LEE2ºseccion
 		Document d1 = Jsoup.connect(url).get();
 		Elements el1 = d1.select("div#cuerpo_noticia");
 		for (org.jsoup.nodes.Element element : el1.select("div.cuerpo_noticia")) {
@@ -151,6 +151,7 @@ public class NoticiaCompleta extends JFrame {
              System.out.println("Get Image from " + path);
              URL url = new URL(path);
              BufferedImage image = ImageIO.read(url);
+         //comprobar
              System.out.println("Load image into frame...");
              lblimagen = new JLabel(new ImageIcon(image));
              panel_imagen.add(lblimagen);

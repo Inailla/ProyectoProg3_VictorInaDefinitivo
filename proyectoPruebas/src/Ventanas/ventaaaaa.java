@@ -13,12 +13,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import Scraper.LlamadaNoticias;
+import ahorcado.ventanas.VentanaJuego;
 import datos.Noticia;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -77,6 +79,14 @@ public class ventaaaaa extends JFrame {
 		pnlIndicaciones.add(btnDeportes);
 		
 		JButton btnPasatiempos = new JButton("Pasatiempos");
+		pnlIndicaciones.add(btnPasatiempos);
+		btnPasatiempos.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0){
+				VentanaJuego vjg= new VentanaJuego();
+				vjg.main(null);
+			}
+		});
 		pnlIndicaciones.add(btnPasatiempos);
 		
 		JButton btnLogin = new JButton("Login");

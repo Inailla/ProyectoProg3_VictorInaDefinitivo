@@ -129,7 +129,7 @@ public class Db {
     	pass=us.getPass();
     	try {
 			
-			ResultSet rb = statement.executeQuery("selecect * from usuario where usuario = '"+nombre+"' and pass = '"+pass+"'");
+			ResultSet rb = statement.executeQuery("select * from usuario where usuario = '"+nombre+"' and pass = '"+pass+"'");
 			while(rb.next()){
 				
 			}
