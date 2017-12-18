@@ -72,7 +72,7 @@ public class Db {
 
 		    }
 	}
-	public static void insertNews(String url,ArrayList<Noticia> arr,String cat){
+	public static void insertNews(String url,ArrayList<Noticia> arr){
 		String date= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Connection con= iniDB(url);
 		String sql = "insert into noticias values (?,?,?,?);";
@@ -83,7 +83,7 @@ public class Db {
 			for(Noticia not : arr) {
 				sta.setString(1, not.getTitulo());
 				sta.setString(2, not.getLink());
-				sta.setString(3, cat);
+				sta.setString(3, not.getCategoria());
 				sta.setDate(4, java.sql.Date.valueOf(date));
 				sta.addBatch();
 			}
@@ -122,23 +122,108 @@ public class Db {
 			      }
 
 	}
-	
-    
-    public static void comprobarUsuario(Usuario us){
-    	nombre=us.getUser();
-    	pass=us.getPass();
-    	try {
+	public static ArrayList<Noticia> extraerNoticia(String url,String cat){
+		Connection con = iniDB(url);
+		ResultSet rs = null;
+		PreparedStatement pr = null;
+		ArrayList<Noticia> array = new ArrayList<Noticia>();
+		String sql="select titulo,link,categoria,fecha from noticias WHERE categoria='"+cat+"'";
+		try {
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
 			
-			ResultSet rb = statement.executeQuery("selecect * from usuario where usuario = '"+nombre+"' and pass = '"+pass+"'");
-			while(rb.next()){
+			while(rs.next()) {
+				array.add(new Noticia(rs.getString(1),
+						rs.getString(2),
+						rs.getString(3),
+						new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate(4))));
+			}
+			return array;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+
+		      try
+
+		      {
+
+		        if(con != null)
+
+		          con.close();
+
+		      }
+
+		      catch(SQLException e)
+
+		      {
+
+		        // Cierre de conexión fallido
+
+		        System.err.println(e);
+
+		      }
+		      }
+		
+	}
+	public static void ComprobarUsuario(String url,Usuario us){
+		Connection con = iniDB(url);
+		PreparedStatement pr = null;
+		String usu = us.getUser();
+		String pass = us.getPass();
+		ResultSet rs = null;
+		String sql = "select * from usuario where usuario = '"+usu+"' ";
+		try {
+			rs = pr.executeQuery(sql);
+			while(rs.next()){
+				if(rs.getString("usuario").equals(usu)||rs.getString("pass").equals(pass)){
+					
+				}
 				
 			}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("error usuario");
 		}
+		
+	}
+	
+    
+    public static void CrearUsuario(Usuario us,String url){
+    	
+    	Connection con = iniDB(url);
+    	PreparedStatement pr = null;
+    	String sql = "insert into usuario values (?,?);";
+    	try {
+			pr = con.prepareStatement(sql);
+			pr.setString(1, us.getUser());
+			pr.setString(2, us.getPass());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+
+		      try
+
+		      {
+
+		        if(con != null)
+
+		          con.close();
+
+		      }
+
+		      catch(SQLException e)
+
+		      {
+
+		        // Cierre de conexión fallido
+
+		        System.err.println(e);
+
+		      }
+		      }
+    	
     }
 
 	

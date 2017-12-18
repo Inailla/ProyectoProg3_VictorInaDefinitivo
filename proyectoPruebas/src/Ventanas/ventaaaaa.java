@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import BaseDatos.Db;
 import Scraper.LlamadaNoticias;
 import datos.Noticia;
 
@@ -35,6 +36,7 @@ import java.awt.event.ActionEvent;
 public class ventaaaaa extends JFrame {
 	LlamadaNoticias na = new LlamadaNoticias();
 	JList<String> lstPosiblesPilotos;
+	private String url = System.getProperty("user.dir")+"/sample1.db";
 	
 	public ventaaaaa() {
 		
@@ -146,26 +148,39 @@ public class ventaaaaa extends JFrame {
 		
 		
 	}
-	public void insertarNoticiasEcono() {
-		
+//	public void insertarNoticiasEcono() {
+//		
+//		 DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
+//		 model.removeAllElements();
+//		
+//		 try {
+//			for (Noticia piloto :na.noticasEco()) {
+//				String tit = piloto.getTitulo();
+//				if(tit.length() > 63) {
+//					tit = tit.substring(0, 63) + "...";
+//				}
+//				model.addElement(tit);
+//			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	public void insertarNoticiasEcono(){
 		 DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
 		 model.removeAllElements();
+		 
 		
-		 try {
-			for (Noticia piloto :na.noticasEco()) {
-				String tit = piloto.getTitulo();
-				if(tit.length() > 63) {
-					tit = tit.substring(0, 63) + "...";
-				}
-				model.addElement(tit);
+		 for (Noticia piloto : Db.extraerNoticia(url, "Economia")) {
+			String tit = piloto.getTitulo();
+			if(tit.length() > 63) {
+				tit = tit.substring(0, 63) + "...";
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addElement(tit);
 		}
 			
 		
-	}public void insertarNoticasDepor(){
+	}
+	public void insertarNoticasDepor(){
 		
 		DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
 		model.removeAllElements();

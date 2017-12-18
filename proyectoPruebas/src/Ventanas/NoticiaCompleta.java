@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 
 import java.awt.Scrollbar;
 import java.awt.image.BufferedImage;
+import javax.swing.JScrollPane;
 
 public class NoticiaCompleta extends JFrame {
 	LlamadaNoticias ana = new LlamadaNoticias();
@@ -36,6 +37,7 @@ public class NoticiaCompleta extends JFrame {
 	TestURLImage test;
 	JLabel lblimagen;
 	JPanel panel_imagen;
+	private JScrollPane scrollPane;
 	public NoticiaCompleta(String[] strings,int i) {
 		
 		setTitle("DeustoNews");
@@ -55,14 +57,14 @@ public class NoticiaCompleta extends JFrame {
 		panel_texto.setBounds(15, 119, 326, 389);
 		getContentPane().add(panel_texto);
 		
+		scrollPane = new JScrollPane();
+		panel_texto.add(scrollPane);
+		
 		textPane = new JTextArea(20,40);
+		scrollPane.setViewportView(textPane);
 		textPane.setLineWrap(true);
 		textPane.setWrapStyleWord(true);
 		textPane.setEditable(false);
-		
-		
-		
-		panel_texto.add(textPane);
 		
 		panel_imagen = new JPanel();
 		panel_imagen.setBounds(379, 119, 354, 389);
@@ -122,18 +124,17 @@ public class NoticiaCompleta extends JFrame {
 			insertarTitulo(p);
 		}
 	}
-	public void insertarTexto(String url,int o) throws IOException{//problema aqui
+	public void insertarTexto(String url,int o) throws IOException{
 		if(o==1){
 		Document d1 = Jsoup.connect(url).get();
 		Elements el1 = d1.select("div#wrapper");
 		for (org.jsoup.nodes.Element element : el1.select("div.entry-inner")) {
 			String full= element.select("div.entry-inner").text();
 			textPane.setText(full);
-		}}else if(o==2){//NO LEE
+		}}else if(o==2){
 		Document d1 = Jsoup.connect(url).get();
 		Elements el1 = d1.select("div#cuerpo_noticia");
-		for (org.jsoup.nodes.Element element : el1.select("div.cuerpo_noticia")) {
-			System.out.println(element.text());
+		for (org.jsoup.nodes.Element element : el1.select("div.noticiacuerpo")) {
 			textPane.setText(element.text());
 			
 		}}else{

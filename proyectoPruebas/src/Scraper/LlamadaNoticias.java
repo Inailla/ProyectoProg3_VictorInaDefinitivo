@@ -28,9 +28,9 @@ public class LlamadaNoticias {
 		Elements el3 = d2.select("link");
 		
 		for(int i = 0; i < el2.size(); i++) {
-			Eco.add(new Noticia(el2.get(i).text(), el3.get(i).text()));
+			Eco.add(new Noticia(el2.get(i).text(), el3.get(i).text(),"Economia"));
 		}
-		Db.insertNews(url, Eco, "Economia");
+		Db.insertNews(url, Eco);
 		return Eco;
 			
 	}
@@ -44,10 +44,10 @@ public class LlamadaNoticias {
 		for (org.jsoup.nodes.Element element : el.select("div.post-thumbnail")) {
 			String title = element.select("div.post-thumbnail a").attr("title");
 			String url2 = element.select("div.post-thumbnail a").attr("href");
-			link.add(new Noticia(title, url2));
+			link.add(new Noticia(title, url2, "Deportes"));
 			
 			}
-		   Db.insertNews(url, link, "Deportes");		
+		   Db.insertNews(url, link);		
              return link;
 	}
     public ArrayList<Noticia> noticasUlt() throws IOException{
@@ -59,9 +59,9 @@ public class LlamadaNoticias {
 		Elements el3 = d2.select("link");
 		
 		for(int i = 0; i < el2.size(); i++) {
-			ult.add(new Noticia(el2.get(i).text(), el3.get(i).text()));
+			ult.add(new Noticia(el2.get(i).text(), el3.get(i).text(),"ultimas"));
 		}
-		Db.insertNews(url, ult, "ultimas");
+		Db.insertNews(url, ult);
 		return ult;
 			
 	}

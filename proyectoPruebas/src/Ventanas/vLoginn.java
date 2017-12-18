@@ -14,6 +14,8 @@ import javax.swing.border.EmptyBorder;
 
 import BaseDatos.Db;
 import datos.Usuario;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class vLoginn extends JFrame{
 
@@ -56,8 +58,7 @@ public class vLoginn extends JFrame{
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Usuario u = new Usuario(textField_usu.getText(), passwordField.getText());
-				Db.comprobarUsuario(u);
-				pri.setVisible(true);
+				
 				
 			}
 		});
@@ -92,6 +93,16 @@ public class vLoginn extends JFrame{
 		label_1.setIcon(new ImageIcon(vLoginn.class.getResource("/Ventanas/lock-icon.png")));
 		panel.add(label_1);
 		
+		JLabel lblAunNoTe = new JLabel("Aun no te has registrado??");
+		lblAunNoTe.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				vRegister re = new vRegister();
+				re.setVisible(true);
+			}
+		});
+		lblAunNoTe.setBounds(174, 30, 191, 20);
+		contentPane.add(lblAunNoTe);
+		
 		}
-	
 }
