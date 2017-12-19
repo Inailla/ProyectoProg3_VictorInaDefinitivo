@@ -25,6 +25,7 @@ public class vLoginn extends JFrame{
 	private JPasswordField passwordField;
 	Db database = new Db(); 
 	ventaaaaa pri = new ventaaaaa();
+	private String urli = System.getProperty("user.dir")+"/sample1.db";
 	
 	
 	public vLoginn(){
@@ -58,6 +59,7 @@ public class vLoginn extends JFrame{
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Usuario u = new Usuario(textField_usu.getText(), passwordField.getText());
+				Db.ComprobarUsuario(urli, u);
 				
 				
 			}

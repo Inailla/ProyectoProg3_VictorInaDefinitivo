@@ -44,7 +44,7 @@ public class Db {
 			statement = con.createStatement();
 			
 			 statement.executeUpdate("create table if not exists noticias (titulo text UNIQUE, link text,categoria text,fecha date)");
-		     statement.executeUpdate("create table if not exists usuario (usario text UNIQUE, pass text)");
+		     statement.executeUpdate("create table if not exists usuario (usuario text UNIQUE, pass text)");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,6 +132,7 @@ public class Db {
 			pr = con.prepareStatement(sql);
 			rs = pr.executeQuery();
 			
+
 			while(rs.next()) {
 				array.add(new Noticia(rs.getString(1),
 						rs.getString(2),
@@ -174,14 +175,21 @@ public class Db {
 		ResultSet rs = null;
 		String sql = "select * from usuario where usuario = '"+usu+"' ";
 		try {
-			rs = pr.executeQuery(sql);
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
 			while(rs.next()){
 				if(rs.getString("usuario").equals(usu)||rs.getString("pass").equals(pass)){
-					
+					System.out.println("Bienvenido al sistema");
+				}else{
+					System.out.println("Erro");
 				}
-				
+				}
 			}
-		} catch (SQLException e) {
+					
+				
+
+			
+		 catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -194,8 +202,11 @@ public class Db {
     	Connection con = iniDB(url);
     	PreparedStatement pr = null;
     	String sql = "insert into usuario values (?,?);";
+    	
     	try {
+    		
 			pr = con.prepareStatement(sql);
+			con.setAutoCommit(true);
 			pr.setString(1, us.getUser());
 			pr.setString(2, us.getPass());
 		} catch (SQLException e) {

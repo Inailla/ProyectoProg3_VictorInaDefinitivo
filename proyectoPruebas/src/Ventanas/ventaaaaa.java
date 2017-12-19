@@ -14,12 +14,14 @@ import org.jsoup.select.Elements;
 
 import BaseDatos.Db;
 import Scraper.LlamadaNoticias;
+import ahorcado.ventanas.VentanaJuego;
 import datos.Noticia;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -36,9 +38,18 @@ import java.awt.event.ActionEvent;
 public class ventaaaaa extends JFrame {
 	LlamadaNoticias na = new LlamadaNoticias();
 	JList<String> lstPosiblesPilotos;
-	private String url = System.getProperty("user.dir")+"/sample1.db";
+	private String urli = System.getProperty("user.dir")+"/sample1.db";
 	
 	public ventaaaaa() {
+		
+		try {
+			na.noticasEco();
+			na.noticasUlt();
+			na.noticiasDepor();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		setTitle("DeustoNews");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,6 +90,14 @@ public class ventaaaaa extends JFrame {
 		pnlIndicaciones.add(btnDeportes);
 		
 		JButton btnPasatiempos = new JButton("Pasatiempos");
+		pnlIndicaciones.add(btnPasatiempos);
+		btnPasatiempos.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0){
+				VentanaJuego vjg= new VentanaJuego();
+				vjg.main(null);
+			}
+		});
 		pnlIndicaciones.add(btnPasatiempos);
 		
 		JButton btnLogin = new JButton("Login");
@@ -148,30 +167,15 @@ public class ventaaaaa extends JFrame {
 		
 		
 	}
-//	public void insertarNoticiasEcono() {
-//		
-//		 DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
-//		 model.removeAllElements();
-//		
-//		 try {
-//			for (Noticia piloto :na.noticasEco()) {
-//				String tit = piloto.getTitulo();
-//				if(tit.length() > 63) {
-//					tit = tit.substring(0, 63) + "...";
-//				}
-//				model.addElement(tit);
-//			}
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 	public void insertarNoticiasEcono(){
 		 DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
 		 model.removeAllElements();
 		 
 		
-		 for (Noticia piloto : Db.extraerNoticia(url, "Economia")) {
+		 for (Noticia piloto : Db.extraerNoticia(urli, "Economia")) {
 			String tit = piloto.getTitulo();
+			
 			if(tit.length() > 63) {
 				tit = tit.substring(0, 63) + "...";
 			}
@@ -185,14 +189,13 @@ public class ventaaaaa extends JFrame {
 		DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
 		model.removeAllElements();
 		
-		try {
-			for (Noticia piloto :na.noticiasDepor()) {
-				
-				model.addElement(piloto.getTitulo());
+		for (Noticia piloto : Db.extraerNoticia(urli, "Deportes")) {
+			String tit = piloto.getTitulo();
+			
+			if(tit.length() > 63) {
+				tit = tit.substring(0, 63) + "...";
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addElement(tit);
 		}
 	
 	}
@@ -201,31 +204,21 @@ public class ventaaaaa extends JFrame {
 		 DefaultListModel<String> model = (DefaultListModel<String>) lstPosiblesPilotos.getModel();
 		 model.removeAllElements();
 		
-		 try {
-			for (Noticia piloto :na.noticasUlt()) {
+		 for (Noticia piloto : Db.extraerNoticia(urli, "ultimas")) {
 				String tit = piloto.getTitulo();
+				
 				if(tit.length() > 63) {
 					tit = tit.substring(0, 63) + "...";
 				}
 				model.addElement(tit);
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		 }
 	public String[] abrirNoticiaDepor(){
 		String[] url = new String[10];
 		
-		try {
-			
-			url[8]=na.noticiasDepor().get(lstPosiblesPilotos.getSelectedIndex()).getLink();
-			url[9]=na.noticiasDepor().get(lstPosiblesPilotos.getSelectedIndex()).getTitulo();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		url[8]=Db.extraerNoticia(urli, "Deportes").get(lstPosiblesPilotos.getSelectedIndex()).getLink();
+		url[9]=Db.extraerNoticia(urli, "Deportes").get(lstPosiblesPilotos.getSelectedIndex()).getTitulo();
+		
 		return url;
 		
 	
@@ -235,28 +228,18 @@ public class ventaaaaa extends JFrame {
 	public String[] abrirNoticiasEco(){
 		String[] url = new String[10];
 		
-		try {
-			url[9]= na.noticasEco().get(lstPosiblesPilotos.getSelectedIndex()).getTitulo();
-			url[8]= na.noticasEco().get(lstPosiblesPilotos.getSelectedIndex()).getLink();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		url[9]= Db.extraerNoticia(urli, "Economia").get(lstPosiblesPilotos.getSelectedIndex()).getTitulo();
+		url[8]= Db.extraerNoticia(urli, "Economia").get(lstPosiblesPilotos.getSelectedIndex()).getLink();
+		
 		return url;
 		
 	}
 	public String[] abrirNoticiasUlt(){
 		String[] url = new String[10];
 		
-		try {
-			url[9]= na.noticasUlt().get(lstPosiblesPilotos.getSelectedIndex()).getTitulo();
-			url[8]= na.noticasUlt().get(lstPosiblesPilotos.getSelectedIndex()).getLink();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		url[9]= Db.extraerNoticia(urli, "ultimas").get(lstPosiblesPilotos.getSelectedIndex()).getTitulo();
+		url[8]= Db.extraerNoticia(urli, "ultimas").get(lstPosiblesPilotos.getSelectedIndex()).getLink();
+		
 		return url;
 		
 	}
