@@ -26,6 +26,10 @@ import ahorcado.ventanas.VentanaWin;
 public class LaminaJuego extends JPanel { // Clase donde programo lo que va en el interior de la Ventana
 	
 	
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 79994572339047373L;
 	private Image ahorcadoImagen; // Variable para poder ir mostrando la imagen del ahorcado
 	//Componentes swing
@@ -44,7 +48,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 	
 	public LaminaJuego (){ // Al inicializar esta clase sucede esto:
 		try { // Intenta leer esta imagen
-			ahorcadoImagen = ImageIO.read(new File ("Ahorcado6vidas.jpg")); // Uso la variable de tipo Image
+			ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado6vidas.jpg")); // Uso la variable de tipo Image
 		}catch(IOException exception){ // Sino imprime que no existe
 			System.out.println("La imagen no existe ");
 		}
@@ -89,7 +93,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 		Rectangle2D rectanguloMensaje = new Rectangle2D.Double(1, 243, 392, 75);
 
 		g2.setFont(new Font("Arial",Font.BOLD,13)); // seteo la fuente, estilo y tamaño para hacer lo siguiente:
-		// Asigno color RGB con el fill y pinto el fondo y en el drawString escribo con la fuente que elegi antes
+		// Asigno color con el fill y pinto el fondo y en el drawString escribo con la fuente que elegi antes
 		g2.setPaint(new Color(50,130,140));g2.fill(rectanguloPalabra);g2.setColor(Color.BLACK);g.drawString("Palabra: ",3,15);
 		g2.setPaint(new Color(50,130,140));g2.fill(rectanguloAciertos);g2.setColor(Color.BLACK);g.drawString("Aciertos: ",3,95);
 		g2.setPaint(new Color(50,130,140));g2.fill(rectanguloLetra);g2.setColor(Color.BLACK);g.drawString("Letra: ",3,175);
@@ -116,26 +120,26 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 		
 		Mensaje msj = new Mensaje(); //Instancio la clase mensaje para ir mostrando mensajes y vidas
 
-		public void actionPerformed(ActionEvent e) { // Pasa esto al tocar el boton "Aceptar"
+		public void actionPerformed(ActionEvent e) { 
 			
-			Object botonPulsado = e.getSource(); // Sirve por si hay varios botones 
+			Object botonPulsado = e.getSource(); 
 			String aciertos=(String)letras.getSelectedItem()+"-"; // Variable para ir mostrando los aciertos
 			
 			char letraPosicion []= new char[juego.getLetrasCorrectas().length]; //Guardo las letras para compararlas
 			letraPosicion = juego.getLetrasCorrectas(); // charArray para mostrar lo que hay que adivinar
 			
-			if (botonPulsado==botonAceptar){ // Si el boton es pulsado:
+			if (botonPulsado==botonAceptar){ 
 				
 				etiquetaAciertos.setText(etiquetaAciertos.getText()+aciertos); //Esta etiqueta va acumulando las letras que se ingresan
 				
 				for(int i=0;i<juego.getPalabraSecreta().toString().length();i++){ // for para comprarar si hay coincidencia en las letras
-				// Se debe transformar en String y usar el charAt 0 para que ande
+				// Se debe transformar en String y usar el charAt 0 para que funcione
 				if(letras.getSelectedItem().toString().charAt(0)==juego.getPalabraSecreta().toString().charAt(i)){
 					letraPosicion[i*2]=letras.getSelectedItem().toString().charAt(0); //El *2 porque hay espacios en blanco
 					etiquetaPalabra.setText(String.valueOf(letraPosicion)); // Voy cambiando la etiqueta al ir descubriendo las letras
 					incorrecto=false; // Evito que me descuente vidas al acertar alguna letra
-					correctos++; // Cuento la cantidad de correctos y luego los comparo con el total de la palabra secreta para ver si el
-					// usuario gano
+					correctos++; // Cuento la cantidad de aciertos y luego los comparo con el total de la palabra secreta para ver si el
+					// usuario ganó
 					
 				}
 				}
@@ -154,7 +158,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 					msj.muchasVidas();
 					etiquetaMensajes.setText(msj.getMensaje()+"(Vidas:"+user.getVidas()+")");
 					try { 
-						ahorcadoImagen = ImageIO.read(new File ("Ahorcado5vidas.jpg"));
+						ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado5vidas.jpg"));
 					}catch(IOException exception){
 						System.out.println("La imagen no existe ");
 					}
@@ -162,14 +166,14 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 					msj.mitadVidas();
 					etiquetaMensajes.setText(msj.getMensaje()+"(Vidas:"+user.getVidas()+")");
 					try { 
-						ahorcadoImagen = ImageIO.read(new File ("Ahorcado4vidas.jpg"));
+						ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado4vidas.jpg"));
 					}catch(IOException exception){
 						System.out.println("La imagen no existe ");
 					}
 				}else if(user.getVidas()==3){
 					etiquetaMensajes.setText(msj.getMensaje()+"(Vidas:"+user.getVidas()+")");
 					try { 
-						ahorcadoImagen = ImageIO.read(new File ("Ahorcado3vidas.jpg"));
+						ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado3vidas.jpg"));
 					}catch(IOException exception){
 						System.out.println("La imagen no existe ");
 					}
@@ -177,14 +181,14 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 					msj.pocasVidas();
 					etiquetaMensajes.setText(msj.getMensaje()+"(Vidas:"+user.getVidas()+")");
 					try { 
-						ahorcadoImagen = ImageIO.read(new File ("Ahorcado2vidas.jpg"));
+						ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado2vidas.jpg"));
 					}catch(IOException exception){
 						System.out.println("La imagen no existe ");
 					}
 				}else if(user.getVidas()==1){
 					etiquetaMensajes.setText(msj.getMensaje()+"(Vidas:"+user.getVidas()+")");
 					try { 
-						ahorcadoImagen = ImageIO.read(new File ("Ahorcado1vida.jpg"));
+						ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado1vida.jpg"));
 					}catch(IOException exception){
 						System.out.println("La imagen no existe ");
 					}
@@ -193,7 +197,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 					etiquetaMensajes.setText(msj.getMensaje());
 					botonAceptar.setEnabled(false);
 					try { 
-						ahorcadoImagen = ImageIO.read(new File ("Ahorcado0vidas.jpg"));
+						ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado0vidas.jpg"));
 					}catch(IOException exception){
 						System.out.println("La imagen no existe ");
 					}
@@ -214,7 +218,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 	}
 	}
 	
-	private class EventoReiniciar implements ActionListener{ //Al tocar en reiniciar inicio el programa devuelta
+	private class EventoReiniciar implements ActionListener{ //Al tocar en reiniciar inicio el programa de nuevo
 
 		public void actionPerformed(ActionEvent e) {
 			
@@ -222,7 +226,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 		}
 	}
 	
-	private class EventoSalir implements ActionListener{ // Si se toca en salir se cierra la ventana y deja de compiliar
+	private class EventoSalir implements ActionListener{ // Si se toca en salir se cierra la ventana y deja de compilar
 
 		public void actionPerformed(ActionEvent e) {
 			

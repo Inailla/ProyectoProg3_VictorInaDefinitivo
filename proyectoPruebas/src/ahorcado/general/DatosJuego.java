@@ -1,7 +1,10 @@
 package ahorcado.general;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import ahorcado.general.Palabra;
 
 public class DatosJuego { // Clase para que el juego pueda funcionar
 	
@@ -16,16 +19,16 @@ public class DatosJuego { // Clase para que el juego pueda funcionar
 	private List <Palabra> palabras = new ArrayList <Palabra>(); // Lista con las palabras posibles
 	
 	public DatosJuego(){
-		palabras.add (new Palabra("CANGURO"));
+		palabras.add (new Palabra("ECONOMIA"));
 		palabras.add (new Palabra("COMPUTADORA"));
-		palabras.add (new Palabra("MACRI"));
-		palabras.add (new Palabra("LEYENDA"));
-		palabras.add (new Palabra("MOCHILA"));
-		palabras.add (new Palabra("PASTEL"));
-		palabras.add (new Palabra("PELOTA"));
-		palabras.add (new Palabra("CRISTAL"));
-		palabras.add (new Palabra("MAGO"));
-		palabras.add (new Palabra("AYUNTAMIENTO"));
+		palabras.add (new Palabra("DEPORTES"));
+		palabras.add (new Palabra("PASATIEMPOS"));
+		palabras.add (new Palabra("PORTATIL"));
+		palabras.add (new Palabra("SCRIPER"));
+		palabras.add (new Palabra("TECNOLOGIA"));
+		palabras.add (new Palabra("TECLADO"));
+		palabras.add (new Palabra("PROGRAMACION"));
+		palabras.add (new Palabra("RATON"));
 		
 		palabraSecreta = palabras.get(rnd.nextInt(palabras.size())); // Elijo una palabra al azar
 
@@ -53,6 +56,12 @@ public class DatosJuego { // Clase para que el juego pueda funcionar
 		return letras;
 	}
 	
-
+	
+	
+	
+	
+	
+	
+	
 
 }
