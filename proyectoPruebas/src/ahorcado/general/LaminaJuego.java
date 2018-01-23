@@ -49,7 +49,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 	public LaminaJuego (){ // Al inicializar esta clase sucede esto:
 		try { // Intenta leer esta imagen
 			ahorcadoImagen = ImageIO.read(new File ("src/ahorcado/general/Ahorcado6vidas.jpg")); // Uso la variable de tipo Image
-		}catch(IOException exception){ // Sino imprime que no existe
+		}catch(IOException exception){ 
 			System.out.println("La imagen no existe ");
 		}
 		
@@ -58,7 +58,7 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 		
 		etiquetaPalabra.setText(String.valueOf(juego.getLetrasCorrectas())); //Seteo en la etiqueta la variable de la clase DatosJuegos
 		
-		add(etiquetaPalabra); //Agrego las etiquetas
+		add(etiquetaPalabra);
 		add(etiquetaAciertos);
 		add(etiquetaMensajes);
 		
@@ -69,21 +69,20 @@ public class LaminaJuego extends JPanel { // Clase donde programo lo que va en e
 		letras.addItem("Y");letras.addItem("Z"); //Agrego los items al combobox
 		add(letras); // Agrego a la lamina el combobox
 		
-		menu.add(menuReiniciar); // Al "boton" menu les agrego los "botones" salir y agregar
-		//menu.addSeparator(); Para separar grupos
-		menu.add(menuSalir); //Lo mismo
+		menu.add(menuReiniciar); // Al boton menu les agrego los botones salir y agregar
+		menu.add(menuSalir); 
 		menuBarra.add(menu); // A la barra de menus le agrego el boton menu donde adentro estan salir y reiniciar
 		add(menuBarra); // agrego a la lamina la barra
 		
-		menuReiniciar.addActionListener(new EventoReiniciar());// Pongo a la escucha lo que va a pasar al tocar reiniciar
-		menuSalir.addActionListener(new EventoSalir()); // Para poner a la escucha uso el metodo addActionListener e inicializo adentro 
-		// la clase con lo que quiero que suceda
+		menuReiniciar.addActionListener(new EventoReiniciar());
+		menuSalir.addActionListener(new EventoSalir());  
+		
 		
 	}
 	
 	public void paintComponent (Graphics g){ // Metodo que sirve para dibujar,controlar colores,fuentes,ubicar botones etiquetas, etc
 		
-		super.paintComponent(g); // Uso el super de la clase padre de Graphics porque sino no funcionan algunas cosas
+		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D)g; // uso el Graphics2D para construir figuras
 		

@@ -13,7 +13,7 @@ public class VentanaJuego extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Toolkit t = Toolkit.getDefaultToolkit(); // Sirve para poner la imagen
-	private Image icono = t.getImage("src/ahorcado/general/Ahorcado6vidas.jpg"); // Ingreso la imagen que tengo en la carpeta del proyecto
+	private Image icono = t.getImage("Ahorcado6vidas.jpg"); // Ingreso la imagen que tengo en la carpeta del proyecto
 	private LaminaJuego lamina = new LaminaJuego(); // Creamos el fondo de la ventana
 	
 	public VentanaJuego (){

@@ -1,5 +1,4 @@
 package ahorcado.ventanas;
-import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -8,7 +7,7 @@ import javax.swing.JLabel;
 
 public class VentanaWin extends JFrame { // Ventana que se abre cuando el usuario gana
 	
-	private JLabel etiquetaGanastes = new JLabel("     Felicidades has ganado!"); // Creo la etiqueta que me muestra el mensaje
+	private JLabel etiquetaGanastes = new JLabel("     Felicidades has ganado!"); 
 	private Toolkit t = Toolkit.getDefaultToolkit();  // Clase requerida para ponerle icono al jframe
 	private Image icono = t.getImage("IconAhorcado.jpg"); //Creo la imagen y le pongo el mismo nombre que el del directorio donde esta guardada
 	
