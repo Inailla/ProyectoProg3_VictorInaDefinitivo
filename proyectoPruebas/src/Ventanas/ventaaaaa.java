@@ -95,7 +95,7 @@ public class ventaaaaa extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0){
 				VentanaJuego vjg= new VentanaJuego();
-				vjg.main(null);
+				vjg.setVisible(true);
 			}
 		});
 		pnlIndicaciones.add(btnPasatiempos);
