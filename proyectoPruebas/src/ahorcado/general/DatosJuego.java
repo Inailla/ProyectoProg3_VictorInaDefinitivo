@@ -29,7 +29,7 @@ public class DatosJuego { // Clase para que el juego pueda funcionar
 		palabras.add (new Palabra("TECLADO"));
 		palabras.add (new Palabra("PROGRAMACION"));
 		palabras.add (new Palabra("RATON"));
-		
+		palabras.add(new Palabra("APROBAR"));
 		palabraSecreta = palabras.get(rnd.nextInt(palabras.size())); // Elijo una palabra al azar
 
 		digitosPS = palabraSecreta.toString().length();// Cuenta los digitos de la palabra que hay que adivinar
